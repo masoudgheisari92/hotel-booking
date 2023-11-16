@@ -29,6 +29,3 @@ class Booking(TimeStampedModel):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     checkin = models.DateField()
     checkout = models.DateField()
-
-    def __str__(self) -> str:
-        return self.id
