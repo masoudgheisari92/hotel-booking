@@ -12,7 +12,7 @@ from .serializers import BookingSerializer
 from .models import Booking
 from .utils import *
 from listing_owner.models import Room
-from listing_owner.serializers import RoomSerializer
+from listing_owner.serializers import Room2Serializer
 
 
 class BookingViewSet(viewsets.ModelViewSet):
@@ -43,7 +43,7 @@ class BookingViewSet(viewsets.ModelViewSet):
 class RoomAvailabilityViewset(viewsets.ReadOnlyModelViewSet):
     authentication_classes = ()
     permission_classes = ()
-    serializer_class = RoomSerializer
+    serializer_class = Room2Serializer
     queryset = Room.objects.all()
     pagination_class = None
 

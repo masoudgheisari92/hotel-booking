@@ -46,8 +46,8 @@ def get_df_convertor(report_format: str, df: pd.DataFrame) -> DFConvertor:
     for convertor in DFConvertor.__subclasses__():
         if convertor.meets_condition(report_format):
             return convertor(df)  # type: ignore
-        else:
-            raise NotFound("df convertor not found")
+    else:
+        raise NotFound("df convertor not found")
 
 
 def get_booked_rooms_report(
