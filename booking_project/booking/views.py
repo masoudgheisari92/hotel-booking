@@ -36,9 +36,7 @@ class BookingViewSet(viewsets.ModelViewSet):
             examples=[OpenApiExample("checkout", "2023-11-18")],
         ),
         OpenApiParameter(
-            name="beds",
-            type=int,
-            examples=[OpenApiExample("beds", "1")],
+            name="beds", type=int, description="number of beds (not required)"
         ),
     ]
 )

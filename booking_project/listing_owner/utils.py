@@ -70,7 +70,7 @@ def get_booked_rooms_report(
 
     for booking in booking_queryset:
         bdate = booking.checkin
-        while bdate < report_end_date:
+        while bdate < min(booking.checkout, report_end_date):
             df.loc[booking.room.name, bdate] = "Booked"
             bdate += timedelta(1)
 
