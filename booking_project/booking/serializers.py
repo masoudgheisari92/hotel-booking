@@ -6,6 +6,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from .models import Booking
+from .utils import get_booked_rooms
 
 
 class BookingSerializer(serializers.ModelSerializer):
@@ -31,17 +32,6 @@ class BookingSerializer(serializers.ModelSerializer):
         room = validated_data["room"]
         checkin = validated_data["checkin"]
         checkout = validated_data["checkout"]
-        if Booking.objects.filter(
-            Q(
-                room=room,
-                checkin__lte=checkin,
-                checkout__gt=checkin,
-            )
-            | Q(
-                room=room,
-                checkin__lt=checkout,
-                checkout__gte=checkout,
-            )
-        ):
+        if get_booked_rooms(checkin, checkout, room=room):
             raise ValidationError({"The room is booked at this time"})
         return super().create(validated_data)

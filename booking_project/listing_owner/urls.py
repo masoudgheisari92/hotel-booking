@@ -13,5 +13,6 @@ router.register("rooms", views.RoomViewSet, basename="room")
 
 
 urlpatterns = [
+    path("report/hotel/", views.HotelReportView.as_view(), name="hotel-report"),
     path("", include(router.urls)),
 ]

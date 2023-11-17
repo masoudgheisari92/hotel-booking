@@ -1,7 +1,5 @@
 from datetime import date
 
-from django.db.models import Q
-
 from drf_spectacular.utils import (
     extend_schema,
     OpenApiParameter,
@@ -62,15 +60,8 @@ class RoomAvailabilityViewset(viewsets.ReadOnlyModelViewSet):
         beds = self.request.query_params.get("beds")
         if beds:
             filter_kwargs.update({"beds": beds})
-        validate_checkin_checkout(checkin, checkout)
-        booked_rooms = Booking.objects.filter(
-            Q(
-                checkin__lte=checkin,
-                checkout__gt=checkin,
-            )
-            | Q(
-                checkin__lt=checkout,
-                checkout__gte=checkout,
-            )
-        ).values("room")
-        return Room.objects.filter(**filter_kwargs).exclude(id__in=booked_rooms)
+        validate_startdate_enddate(checkin, checkout, "checkin", "checkout")
+        booked_rooms = get_booked_rooms(checkin, checkout)
+        return Room.objects.filter(**filter_kwargs).exclude(
+            id__in=booked_rooms.values("room")
+        )
