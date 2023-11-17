@@ -1,5 +1,7 @@
 from django.db import models
 
+from listing_owner.models import Room
+
 
 class TimeStampedModel(models.Model):
     class Meta:
@@ -7,21 +9,6 @@ class TimeStampedModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-class Hotel(TimeStampedModel):
-    name = models.CharField(max_length=32)
-
-    def __str__(self) -> str:
-        return self.name
-
-
-class Room(TimeStampedModel):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    name = models.CharField(max_length=16)
-
-    def __str__(self) -> str:
-        return self.name
 
 
 class Booking(TimeStampedModel):

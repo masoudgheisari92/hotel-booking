@@ -5,7 +5,7 @@ from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from .models import Booking, Room
+from .models import Booking
 
 
 class BookingSerializer(serializers.ModelSerializer):
@@ -45,11 +45,3 @@ class BookingSerializer(serializers.ModelSerializer):
         ):
             raise ValidationError({"The room is booked at this time"})
         return super().create(validated_data)
-
-
-class RoomSerializer(serializers.ModelSerializer):
-    hotel = serializers.SlugRelatedField("name", read_only=True)
-
-    class Meta:
-        model = Room
-        fields = ("name", "hotel")

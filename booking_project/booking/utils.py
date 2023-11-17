@@ -13,4 +13,7 @@ def validate_checkin_checkout(checkin: str, checkout: str) -> bool:
     if checkout <= checkin:
         raise ValidationError("checkout date should be greater than checkin date")
 
+    if checkin < datetime.now().date():
+        raise ValidationError("checkin date can not be earlier than today")
+
     return True
